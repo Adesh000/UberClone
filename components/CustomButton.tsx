@@ -9,6 +9,7 @@ const CustomButton = ({
   titleColor,
   titleFont,
   isOutline,
+  onPress,
 }) => {
   return (
     <TouchableOpacity
@@ -19,6 +20,7 @@ const CustomButton = ({
           borderColor: isOutline ? "#EBEBEB" : "#0286FF",
         },
       ]}
+      onPress={onPress}
     >
       {LeftIcon && <LeftIcon />}
       <CustomText

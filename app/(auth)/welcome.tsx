@@ -5,12 +5,17 @@ import Swiper from "react-native-swiper";
 import { images, onboarding } from "@/constants";
 import CustomText from "@/components/CustomText";
 import CustomButton from "@/components/CustomButton";
+import { Redirect, router } from "expo-router";
 const Welcome = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const swiperRef = useRef<Swiper>(null);
+  const isLastSlide = activeIndex === onboarding.length - 1;
   return (
     <SafeAreaView style={styles.mainContainer}>
-      <TouchableOpacity style={styles.skipContainer}>
+      <TouchableOpacity
+        style={styles.skipContainer}
+        onPress={() => swiperRef?.current?.scrollTo(onboarding.length - 1)}
+      >
         <CustomText
           text={"Skip"}
           fontFamily={"Jakarta-Bold"}
@@ -56,10 +61,15 @@ const Welcome = () => {
         ))}
       </Swiper>
       <CustomButton
-        title="Next"
+        title={isLastSlide ? "Get Started" : "Next"}
         bgColor={"#0286FF"}
         titleColor={"#FFF"}
         isOutline={false}
+        onPress={() =>
+          isLastSlide
+            ? router.replace("/(auth)/sign-up")
+            : swiperRef?.current?.scrollBy(1)
+        }
       />
     </SafeAreaView>
   );
